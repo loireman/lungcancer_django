@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Діагностика:</title>
+  </head>
+
+  <body>
+    <div style="
+      height: 100vh;
+      display: grid;
+      align-content: center;
+      justify-content: center;
+    ">
+      <div style="
+        border-radius: 30px;
+        padding: 10px;
+        background-color: lightgrey;
+      ">
+        <h1>Завантажте файл:</h1>
+        <form method=post enctype=multipart/form-data>
+          <input type=file name=file>
+          <br style="
+          padding: 15px;
+          ">
+          <input type=submit value=Upload>
+        </form>
+        
+        <div>
+          <br style="
+          font-size: 36px;
+          ">
+          {% if response==1 %}
+          Прогнозований клас:
+          {% endif %}
+          <p style="font-size:48px">{{ result }}</p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
