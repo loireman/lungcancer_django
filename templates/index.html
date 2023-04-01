@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Діагностика:</title>
+    <title>Діагностика</title>
   </head>
 
   <body>
@@ -13,26 +13,54 @@
     ">
       <div style="
         border-radius: 30px;
-        padding: 10px;
         background-color: lightgrey;
+        overflow: clip;
       ">
-        <h1>Завантажте файл:</h1>
-        <form method=post enctype=multipart/form-data>
-          <input type=file name=file>
-          <br style="
-          padding: 15px;
+        <div style="
+        display: flex;
+        gap: 16px;
+        ">
+          <div style="
+            padding: 16px;
           ">
-          <input type=submit value=Upload>
-        </form>
-        
-        <div>
-          <br style="
-          font-size: 36px;
+            <h1>Завантажте файл:</h1>
+            <form method=post enctype=multipart/form-data>
+              <input style="
+              padding: 10px;
+              margin: 32px 0px;
+              " type=file name=file>
+              <br>
+              <input style="
+              margin: 10px;
+              padding: 10px 64px;
+              " type=submit value=Upload>
+            </form>
+          </div>
+          <div style="
+            background-color:lightslategrey;
+            padding: 24px;
           ">
-          {% if response==1 %}
-          Прогнозований клас:
-          {% endif %}
-          <p style="font-size:48px">{{ result }}</p>
+            <div>
+              <span style="
+              font-size: 36px;
+              ">
+                {% if response==1 %}
+                Прогнозований клас:
+                {% endif %}
+              </span>
+              <p style="font-size:36px">{{ result }}</p> 
+            </div>
+            <div>
+              <span style="
+              font-size: 36px;
+              ">
+                {% if response==1 %}
+                Відсоток прогнозу:
+                {% endif %}
+              </span>
+              <span style="font-size:36px">{{ percent }}</span> 
+            </div>
+          </div>
         </div>
       </div>
     </div>

@@ -174,14 +174,14 @@ def upload_file():
             sub_generator.reset()
 
             predictions = loaded_model.predict(sub_generator)
-            predictions = predictions[0].round().astype(int)  # multiple categories
+            print(predictions[0][0])
+            predictions_res = predictions[0].round().astype(int)  # multiple categories
             print(filename)
-            print(predictions[0])
-            result = class_names[predictions[0]]
+            result = class_names[predictions_res[0]]
 
             os.remove(filename)
 
-            return render_template('index.html', result=result, response=1)
+            return render_template('index.html', result=result, response=1, percent=(predictions[0][0] * 100).round(2))
     return render_template('index.html')
 
 if __name__ == "__main__":
