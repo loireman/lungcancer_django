@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block content %}
+  <h1>{{ page.meta.title }}</h1>
+  <p>{{ page.meta.date }}</p>
+
+  <div style="
+    height: 100vh;
+    display: grid;
+    align-content: center;
+    justify-content: center;
+  ">
+    <div style="
+      border-radius: 30px;
+      background-color: lightgrey;
+      overflow: clip;
+    ">
+      <div style="
+      display: flex;
+      gap: 16px;
+      ">
+        <div style="
+          padding: 16px;
+        ">
+          <h1>Завантажте файл:</h1>
+          <form method=post enctype=multipart/form-data>
+            <input style="
+            padding: 10px;
+            margin: 32px 0px;
+            " type=file name=file>
+            <br>
+            <input style="
+            margin: 10px;
+            padding: 10px 64px;
+            " type=submit value=Upload>
+          </form>
+        </div>
+        <div style="
+          background-color:lightslategrey;
+          padding: 24px;
+        ">
+          <div>
+            <span style="
+            font-size: 36px;
+            ">
+              {% if response==1 %}
+              Прогнозований клас:
+              {% endif %}
+            </span>
+            <p style="font-size:36px">{{ result }}</p> 
+          </div>
+          <div>
+            <span style="
+            font-size: 36px;
+            ">
+              {% if response==1 %}
+              Відсоток прогнозу:
+              {% endif %}
+            </span>
+            <span style="font-size:36px">{{ percent }}</span> 
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

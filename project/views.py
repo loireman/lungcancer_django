@@ -1,32 +1,28 @@
+from flask import request, render_template
+from app import app
+
 import cv2
 import os
 import numpy as np
 import pydicom as dicom
-from flask import Flask, flash, request, redirect, url_for, render_template
 from werkzeug.utils import secure_filename
-from skimage import measure, morphology, segmentation
+from skimage import measure, segmentation
 import scipy.ndimage as ndimage
 import tensorflow as tf
-from tensorflow import keras
 from tensorflow.keras.models import load_model
-from tensorflow.keras.preprocessing import image
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 
 IMG_SIZE = 224  # какого размера подаем изображения в сеть
 IMG_CHANNELS = 1  # у фото 1 канал
+ALLOWED_EXTENSIONS = {'dcm'}
+
 input_shape = (IMG_SIZE, IMG_SIZE, IMG_CHANNELS)
 class_names = [
     'Не діагностовано',  # 0
     'Діагностовано',  # 1
 ]
 
-UPLOAD_FOLDER = 'upload'
-ALLOWED_EXTENSIONS = {'dcm'}
-
-app = Flask(__name__)
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-
-loaded_model = load_model('models/model-1680359862.h5')
+loaded_model = load_model('../models/model-1680359862.h5')
 
 # load weights into new model
 loaded_model.trainable = True
@@ -149,7 +145,6 @@ def preprocess_image(filename):
 
     return np.array(data)
 
-
 @app.route('/', methods=['GET', 'POST'])
 def upload_file():
     if request.method == 'POST':
@@ -183,6 +178,3 @@ def upload_file():
 
             return render_template('index.html', result=result, response=1, percent=(predictions[0][0] * 100).round(2))
     return render_template('index.html')
-
-if __name__ == "__main__":
-    app.run()
