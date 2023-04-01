@@ -26,6 +26,10 @@ jobs:
         pip install scikit-image
         pip install flask
         pip install scipy
+        
+        pip uninstall typing_extensions
+        pip uninstall fastapi
+        pip install --no-cache fastapi
     - name: Analysing the code with pylint
       run: |
         pylint $(git ls-files '*.py')
