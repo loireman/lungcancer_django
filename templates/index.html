@@ -1,9 +1,17 @@
-{% extends "base.html" %}
-{% block content %}
-  <h1>{{ page.meta.title }}</h1>
-  <p>{{ page.meta.date }}</p>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap');
+  body {
+    font-family: 'Montserrat', sans-serif;
+  }
+  .button{
+    background-color: #04AB51;
+  }
+  .button:hover{
+    background-color: #037538;
+  }
+</style>
 
-  <div style="
+<div style="
     height: 100vh;
     display: grid;
     align-content: center;
@@ -21,16 +29,23 @@
         <div style="
           padding: 16px;
         ">
-          <h1>Завантажте файл:</h1>
+          <h1 style="font-size: 48px;">Завантажте файл:</h1>
           <form method=post enctype=multipart/form-data>
             <input style="
-            padding: 10px;
-            margin: 32px 0px;
+            background-color: #D21212;
+            padding: 10px 24px;
+            margin: 32px 8px;
+            font-size: 24px;
+            border: 0;
+            border-radius: 30px;
             " type=file name=file>
             <br>
-            <input style="
+            <input class="button" style="
             margin: 10px;
             padding: 10px 64px;
+            font-size: 24px;
+            border: 0;
+            border-radius: 30px;
             " type=submit value=Upload>
           </form>
         </div>
@@ -62,4 +77,3 @@
       </div>
     </div>
   </div>
-{% endblock %}
