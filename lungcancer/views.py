@@ -5,10 +5,8 @@ import cv2
 import os
 import numpy as np
 import pydicom as dicom
-from werkzeug.utils import secure_filename
 from skimage import measure, segmentation
 import scipy.ndimage as ndimage
-import tensorflow as tf
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 import matplotlib.pyplot as plt
