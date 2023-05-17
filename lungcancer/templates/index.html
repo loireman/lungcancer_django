@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Upload a Photo</title>
+</head>
+<body>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap');
+        body {
+          font-family: 'Montserrat', sans-serif;
+        }
+        .button{
+          background-color: #04AB51;
+        }
+        .button:hover{
+          background-color: #037538;
+        }
+      </style>
+      
+      <div style="
+          height: 100vh;
+          display: grid;
+          align-content: center;
+          justify-content: center;
+        ">
+          <div style="
+            border-radius: 30px;
+            background-color: lightgrey;
+            overflow: clip;
+          ">
+            <div style="
+            display: flex;
+            gap: 16px;
+            ">
+              <div style="
+                padding: 16px;
+              ">
+                <h1 style="font-size: 48px;">Завантажте файл:</h1>
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <input style="
+                        background-color: #D21212;
+                        padding: 10px 24px;
+                        margin: 32px 8px;
+                        font-size: 24px;
+                        border: 0;
+                        border-radius: 30px;
+                    " type="file" name="document">
+                    <br>
+                    <input class="button" style="
+                        margin: 10px;
+                        padding: 10px 64px;
+                        font-size: 24px;
+                        border: 0;
+                        border-radius: 30px;
+                    " type="submit" value="Upload">
+                </form>
+              </div>
+              <div style="
+                background-color:lightslategrey;
+                padding: 24px;
+              ">
+                <div>
+                    <span style="
+                  font-size: 36px;
+                  ">
+                    {% if response %}
+                    Прогнозований клас:
+                    {% endif %}
+                </span>
+                <p style="font-size:36px">{{ result }}</p> 
+            </div>
+            <div>
+                <span style="
+                  font-size: 36px;
+                  ">
+                    {% if response %}
+                    Відсоток прогнозу:
+                    {% endif %}
+                </span>
+                <span style="font-size:36px">{{ percent }}</span> 
+            </div>
+            <img src="lungcancer/upload/myimage1.png" alt="lung image"/>
+            <img src="lungcancer/upload/myimage2.png" alt="lung image"/>
+            <img src="lungcancer/upload/myimage3.png" alt="lung image"/>
+            <img src="lungcancer/upload/myimage4.png" alt="lung image"/>
+              </div>
+            </div>
+          </div>
+        </div>
+</body>
+</html>
