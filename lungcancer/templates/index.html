@@ -1,92 +1,226 @@
 <!DOCTYPE html>
 <html>
-<head>
+  <head>
     <title>Upload a Photo</title>
-</head>
-<body>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  </head>
+  <body>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap');
-        body {
-          font-family: 'Montserrat', sans-serif;
+      @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap");
+      body {
+        margin: 0;
+        font-family: "Montserrat", sans-serif;
+        line-height: 1.5;
+        background-color: #f1f3fb;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+      code {
+        font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+          monospace;
+      }
+      input {
+        appearance: none;
+        border-radius: 0;
+      }
+      .card {
+        margin: 2rem auto;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        max-width: 800px;
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 10px 20px 0 rgba(#999, 0.25);
+        padding: 0.75rem;
+      }
+
+      .card-image {
+        border-radius: 8px;
+        overflow: hidden;
+        padding-bottom: 65%;
+        background-image: url("https://assets.codepen.io/285131/coffee_1.jpg");
+        background-repeat: no-repeat;
+        background-size: 150%;
+        background-position: 0 5%;
+        position: relative;
+      }
+
+      .card-heading {
+        font-size: 1.75rem;
+        font-weight: 700;
+        color: #283772;
+        line-height: 1.222;
+      }
+
+      .card-form {
+        padding: 2rem 1rem 0;
+      }
+
+      .action {
+        margin-top: 2rem;
+      }
+
+      .action-button {
+        font: inherit;
+        font-size: 1.25rem;
+        padding: 1em;
+        width: 100%;
+        font-weight: 500;
+        background-color: #6658d3;
+        border-radius: 6px;
+        color: #fff;
+        border: 0;
+        &:focus {
+          outline: 0;
         }
-        .button{
-          background-color: #04AB51;
-        }
-        .button:hover{
-          background-color: #037538;
-        }
-      </style>
-      
-      <div style="
-          height: 100vh;
-          display: grid;
-          align-content: center;
-          justify-content: center;
-        ">
-          <div style="
-            border-radius: 30px;
-            background-color: lightgrey;
-            overflow: clip;
-          ">
-            <div style="
-            display: flex;
-            gap: 16px;
-            ">
-              <div style="
-                padding: 16px;
-              ">
-                <h1 style="font-size: 48px;">Завантажте файл:</h1>
-                <form method="post" enctype="multipart/form-data">
-                    {% csrf_token %}
-                    <input style="
-                        background-color: #D21212;
-                        padding: 10px 24px;
-                        margin: 32px 8px;
-                        font-size: 24px;
-                        border: 0;
-                        border-radius: 30px;
-                    " type="file" name="document">
-                    <br>
-                    <input class="button" style="
-                        margin: 10px;
-                        padding: 10px 64px;
-                        font-size: 24px;
-                        border: 0;
-                        border-radius: 30px;
-                    " type="submit" value="Upload">
-                </form>
-              </div>
-              <div style="
-                background-color:lightslategrey;
-                padding: 24px;
-              ">
-                <div>
-                    <span style="
-                  font-size: 36px;
-                  ">
-                    {% if response %}
-                    Прогнозований клас:
-                    {% endif %}
-                </span>
-                <p style="font-size:36px">{{ result }}</p> 
-            </div>
-            <div>
-                <span style="
-                  font-size: 36px;
-                  ">
-                    {% if response %}
-                    Відсоток прогнозу:
-                    {% endif %}
-                </span>
-                <span style="font-size:36px">{{ percent }}</span> 
-            </div>
-            <img src="lungcancer/upload/myimage1.png" alt="lung image"/>
-            <img src="lungcancer/upload/myimage2.png" alt="lung image"/>
-            <img src="lungcancer/upload/myimage3.png" alt="lung image"/>
-            <img src="lungcancer/upload/myimage4.png" alt="lung image"/>
-              </div>
-            </div>
-          </div>
-        </div>
-</body>
+      }
+      .action-button:hover {
+        background-color: #6658d3d6;
+      }
+
+      .img-small {
+        padding: 0 6rem;
+        display: grid;
+        justify-content: center;
+      }
+
+      .card-info {
+        overflow-inline: scroll;
+        padding: 1rem 1rem;
+        font-size: 1.125rem;
+        color: #8597a3;
+      }
+
+      .file-box {
+        position: relative;
+        height: 10rem;
+        border: 4px dashed #000000;
+        border-radius: 30px;
+      }
+
+      .file-text {
+        width: 100%;
+        height: 100%;
+        padding-top: 40px;
+        font-size: larger;
+        text-align: center;
+        color: #000000;
+        font-family: Arial;
+      }
+      .file-input {
+        position: absolute;
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        outline: none;
+        opacity: 0;
+      }
+    </style>
+
+    <div class="card">
+      <h2 class="card-heading">Дослідження раку легень</h2>
+      <div class="card-form">
+        <form class="file-box" method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          <input
+            id="fileinput"
+            class="file-input"
+            type="file"
+            name="document"
+          />
+          <p class="file-text">
+            Перетягніть фото у форматі .dcm або натисніть щоб завантажити його
+          </p>
+          <button type="submit" class="action-button">Завантажити</button>
+        </form>
+        <div style="padding: 6rem"></div>
+      </div>
+    </div>
+    {% if response %}
+    <div class="card">
+      <h2 class="card-heading">Останній результат</h2>
+      <p style="font-size: 36px">{{ percent }}</p>
+      <div style="display: flex; padding: 4px; align-items: center">
+        <img
+          width="256"
+          height="256"
+          style="border-radius: 30px"
+          src="lungcancer/upload/myimage1.png"
+          alt="lung image"
+        />
+        <p class="card-info">
+          Фото легенів у форматі .dcm зазвичай є КТ (Комп’ютерна томографія)
+          скануванням легенів. КТ-сканування регулярно використовуються у
+          клінічній практиці для діагностики, скринінгу та контролю за
+          інфекціями легенів, такими як COVID-19 . КТ-зображення можуть показати
+          детальну інформацію про легені, включаючи наявність інфекцій або
+          аномалій.
+        </p>
+      </div>
+      <div style="display: flex; padding: 4px; align-items: center">
+        <p class="card-info">
+          Маркери вододілу використовуються у алгоритмі вододілу для
+          сегментації, тобто для розділення різних об’єктів на зображенні.
+          Маркерне зображення будується з області низького градієнту всередині
+          зображення. У градієнтному зображенні області високих значень
+          створюють бар’єри, які допомагають сегментувати зображення.
+        </p>
+        <img
+          width="256"
+          height="256"
+          style="border-radius: 30px"
+          src="lungcancer/upload/myimage4.png"
+          alt="lung image"
+        />
+      </div>
+      <div style="display: flex; padding: 4px; align-items: center">
+        <img
+          width="256"
+          height="256"
+          style="border-radius: 30px"
+          src="lungcancer/upload/myimage3.png"
+          alt="lung image"
+        />
+        <p class="card-info">
+          Оператор Собеля - це дискретний оператор диференціювання, який
+          використовується у обробці зображень та комп’ютерному зорі, особливо у
+          алгоритмах виявлення країв, де він створює зображення, що підкреслює
+          краї. Оператор Собеля базується на згортанні зображення з малим,
+          роздільним та цілочисельним фільтром у горизонтальному та
+          вертикальному напрямках і тому є відносно дешевим з точки зору
+          обчислень. З іншого боку, наближення градієнта, яке він виробляє, є
+          відносно грубим, особливо для високочастотних змін у зображенні.
+        </p>
+      </div>
+      <div style="display: flex; padding: 4px; align-items: center">
+        <p class="card-info">
+          Сегментація легень є необхідним початковим кроком для аналізу
+          зображень легень, це передумова для надання точного аналізу зображень
+          КТ легень, таких як виявлення раку легень. Використання глибоких
+          нейронних мереж, одна з найбільш використовуваних архітектур у
+          глибокому навчанні для сегментації зображень, може покращити точність
+          розпізнавання раку легень.
+        </p>
+        <img
+          width="256"
+          height="256"
+          style="border-radius: 30px"
+          src="lungcancer/upload/myimage2.png"
+          alt="lung image"
+        />
+      </div>
+    </div>
+    {% endif %}
+
+    <script>
+      $(document).ready(function () {
+        $("#fileinput").change(function () {
+          var fileName = $(this).val().split("\\").pop();
+          $("form p").text("Файл обрано: " + fileName);
+        });
+      });
+    </script>
+  </body>
 </html>
